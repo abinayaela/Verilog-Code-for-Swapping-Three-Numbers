@@ -31,75 +31,99 @@ Capture the waveform output and include the results in your report for verificat
 
 ## Verilog Code:
 
-     module swap_three_numbers ( a_in,b_in,c_in,a_out,b_out,c_out);
+        // swap_three_numbers.v 
 
-    input wire [7:0] a_in;
-    
-    input wire [7:0] b_in;
-    
-    input wire [7:0] c_in;
-    
-    output reg [7:0] a_out;
-    
-    output reg [7:0] b_out;
-    
-    output reg [7:0] c_out;
-    
-    always @(*) begin
-    
-        a_out = b_in; 
-        
-        b_out = c_in; 
-        
-        c_out = a_in; 
-        
-    end
-    
-     endmodule
+         module swap_three_numbers ( input wire [7:0] a_in,
+
+         input wire [7:0] b_in,
+
+         input wire [7:0] c_in,
 
 
+          output reg [7:0] a_out,
+
+        output reg [7:0] b_out, 
+
+         output reg [7:0] c_out );
+
+         always @(*) begin a_out = b_in;
+
+          // Swap: a = b b_out = c_in;
+
+           // Swap: b = c c_out = a_in;
+
+           // Swap: c = a 
+
+          end
+
+            endmodule
 
 
 ## output 
 
-![image](https://github.com/user-attachments/assets/87273ec4-fdd0-440f-9427-93050cbbe899)
+![image](https://github.com/user-attachments/assets/56a3328d-2597-4609-b24c-93932ba5894b)
 
+
+![image](https://github.com/user-attachments/assets/d0d50dd2-b54d-443c-918d-966cb105f9ac)
+
+![image](https://github.com/user-attachments/assets/f031fb56-5ee7-46f8-9c9d-d5cb19cc6778)
 
 
 
 ## Testbench for Swapping Three Numbers:
 
+      // swap_three_numbers_tb.v `timescale 1ns / 1ps
+
+       module swap_three_numbers_tb;
+
+       // Inputs
+   
+      reg [7:0] a;
+   
+      reg [7:0] b;
+   
+       reg [7:0] c;
+   
+
+      // Outputs
+   
+      wire [7:0] a_out;
+
+      wire [7:0] b_out;
+
+      wire [7:0] c_out;
 
 
-    `timescale 1ns / 1ps
-     module swap_three_numbers_tb;
+       // Instantiate the Unit Under Test (UUT)
+      swap_three_numbers uut (
+    .a_in(a),
+    .b_in(b),
+    .c_in(c),
+    .a_out(a_out),
+    .b_out(b_out),
+    .c_out(c_out)
+     );
 
-    reg [7:0] a;
-    reg [7:0] b;
-    reg [7:0] c;
-    wire [7:0] a_out;
-    wire [7:0] b_out;
-    wire [7:0] c_out;
-    swap_three_numbers uut (
-        .a_in(a),
-        .b_in(b),
-        .c_in(c),
-        .a_out(a_out),
-        .b_out(b_out),
-        .c_out(c_out)
-    );
+     // Test procedure
     initial begin
-        a = 8'd10; 
-        b = 8'd20; 
-        c = 8'd30; 
-        #10;
-        $display("Before Swap: a = %d, b = %d, c = %d", a, b, c);
-        #10;
-        $display("After Swap: a = %d, b = %d, c = %d", a_out, b_out, c_out);
-        #10 $stop;
-        end
-        endmodule
+    // Initialize inputs
+    a = 8'd10; // Assign 10 to a
+    b = 8'd20; // Assign 20 to b
+    c = 8'd30; // Assign 30 to c
 
+    // Wait for 10 ns to observe swap
+    #10;
+
+    // Display results
+    $display("Before Swap: a = %d, b = %d, c = %d", a, b, c);
+    #10;
+    $display("After Swap: a = %d, b = %d, c = %d", a_out, b_out, c_out);
+    
+    // Stop the simulation
+    #10 $stop;
+     end
+
+    
 
        
 
